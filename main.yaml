@@ -1,9 +1,20 @@
 - hosts: ansible
   connection: local
-  tasks:
-  - name: describe-instances
-    cmd: aws ec2 describe-instances --region "{{ item }}" > "{{ inv_dir }}"/"{{ item }}"/instances.json
-    with_items:
+  vars:
+    aws_regions: 
     - us-east-1
     - us-west-1
     - us-west-2
+  tasks:
+  - name: create dirs
+    file: path="{{ inv_dir }}/{{ item }}" state=directory
+    with_items: "{{ aws_regions }}"
+  - name: describe-instances
+    shell: "aws ec2 describe-instances --profile {{ aws_profile }}  --region {{ item }} > {{ inv_dir }}/{{ item }}/instances.json"
+    with_items: "{{ aws_regions }}"
+  - name: describe-groups
+    shell: "aws ec2 describe-security-groups --profile {{ aws_profile }} --region {{ item }} > {{ inv_dir }}/{{ item }}/groups.json"
+    with_items: "{{ aws_regions }}"
+  - name: describe-volvumes
+    shell: "aws ec2 describe-volumes --profile {{ aws_profile }} --region {{ item }} > {{ inv_dir }}/{{ item }}/volumes.json"
+    with_items: "{{ aws_regions }}"

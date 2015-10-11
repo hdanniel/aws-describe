@@ -1,5 +1,5 @@
 [ansible]
 127.0.0.1
 
-[ec:children]
+[cab:children]
 ansible

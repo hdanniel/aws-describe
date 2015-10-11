@@ -10,11 +10,11 @@
     file: path="{{ inv_dir }}/{{ item }}" state=directory
     with_items: "{{ aws_regions }}"
   - name: describe-instances
-    shell: "aws ec2 describe-instances --profile {{ aws_profile }}  --region {{ item }} > {{ inv_dir }}/{{ item }}/instances.json"
+    shell: "aws ec2 describe-instances --profile {{ aws_profile }}  --region {{ item }} | python -mjson.tool > {{ inv_dir }}/{{ item }}/instances.json"
     with_items: "{{ aws_regions }}"
   - name: describe-groups
-    shell: "aws ec2 describe-security-groups --profile {{ aws_profile }} --region {{ item }} > {{ inv_dir }}/{{ item }}/groups.json"
+    shell: "aws ec2 describe-security-groups --profile {{ aws_profile }} --region {{ item }} |  python -mjson.tool > {{ inv_dir }}/{{ item }}/groups.json"
     with_items: "{{ aws_regions }}"
   - name: describe-volvumes
-    shell: "aws ec2 describe-volumes --profile {{ aws_profile }} --region {{ item }} > {{ inv_dir }}/{{ item }}/volumes.json"
+    shell: "aws ec2 describe-volumes --profile {{ aws_profile }} --region {{ item }} |  python -mjson.tool  > {{ inv_dir }}/{{ item }}/volumes.json"
     with_items: "{{ aws_regions }}"

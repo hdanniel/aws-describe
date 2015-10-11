@@ -1,0 +1,9 @@
+- hosts: ansible
+  connection: local
+  tasks:
+  - name: describe-instances
+    cmd: aws ec2 describe-instances --region "{{ item }}" > "{{ inv_dir }}"/"{{ item }}"/instances.json
+    with_items:
+    - us-east-1
+    - us-west-1
+    - us-west-2

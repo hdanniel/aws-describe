@@ -1,0 +1,1 @@
+ansible-playbook main.yaml -i ec.hosts --extra-vars "inv_dir=/home/hdanniel/ansible/aws-inventario"

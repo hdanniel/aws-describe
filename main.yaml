@@ -10,14 +10,14 @@
     file: path="{{ inv_dir }}/{{ item }}" state=directory
     with_items: "{{ aws_regions }}"
   - name: describe-instances
-    shell: "aws ec2 describe-instances --profile {{ aws_profile }}  --region {{ item }} | python -mjson.tool > {{ inv_dir }}/{{ item }}/instances.json"
+    shell: "aws ec2 describe-instances --profile {{ aws_profile }}  --region {{ item }} | python -c'import fileinput, json;print(json.dumps(json.loads(\"\".join(fileinput.input())),sort_keys=True, indent=4))' > {{ inv_dir }}/{{ item }}/instances.json"
     with_items: "{{ aws_regions }}"
   - name: describe-groups
-    shell: "aws ec2 describe-security-groups --profile {{ aws_profile }} --region {{ item }} |  python -mjson.tool > {{ inv_dir }}/{{ item }}/groups.json"
+    shell: "aws ec2 describe-security-groups --profile {{ aws_profile }} --region {{ item }} | python -c'import fileinput, json;print(json.dumps(json.loads(\"\".join(fileinput.input())),sort_keys=True, indent=4))' > {{ inv_dir }}/{{ item }}/groups.json"
     with_items: "{{ aws_regions }}"
   - name: describe-volvumes
-    shell: "aws ec2 describe-volumes --profile {{ aws_profile }} --region {{ item }} |  python -mjson.tool  > {{ inv_dir }}/{{ item }}/volumes.json"
+    shell: "aws ec2 describe-volumes --profile {{ aws_profile }} --region {{ item }} |python -c'import fileinput, json;print(json.dumps(json.loads(\"\".join(fileinput.input())),sort_keys=True, indent=4))'  > {{ inv_dir }}/{{ item }}/volumes.json"
     with_items: "{{ aws_regions }}"
   - name: describe-elb
-    shell: "aws elb describe-load-balancers --profile {{ aws_profile }} --region {{ item }} |  python -mjson.tool  > {{ inv_dir }}/{{ item }}/elbs.json"
+    shell: "aws elb describe-load-balancers --profile {{ aws_profile }} --region {{ item }} | python -c'import fileinput, json;print(json.dumps(json.loads(\"\".join(fileinput.input())),sort_keys=True, indent=4))'  > {{ inv_dir }}/{{ item }}/elbs.json"
     with_items: "{{ aws_regions }}"

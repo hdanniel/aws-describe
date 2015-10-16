@@ -36,3 +36,6 @@
   - name: describe-rds
     shell: "aws rds --profile {{ aws_profile }} describe-db-instances | jq '.DBInstances|=sort_by(.DBInstanceIdentifier)' > {{ inv_dir }}/{{ item }}/rds.json"
     with_items: "{{ aws_regions }}"
+  - name: describe-s3
+    shell: "aws s3 ls > {{ inv_dir }}/s3.json"
+    with_items: "{{ aws_regions }}"

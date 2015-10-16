@@ -13,7 +13,7 @@
     shell: "aws ec2 describe-instances --profile {{ aws_profile }}  --region {{ item }} |  jq '.Reservations|=sort_by(.ReservationId)|.Reservations[].Instances|=sort_by(.InstanceId)' > {{ inv_dir }}/{{ item }}/instances.json"
     with_items: "{{ aws_regions }}"
   - name: describe-groups
-    shell: "aws ec2 describe-security-groups --profile {{ aws_profile }} --region {{ item }} | jq '.SecurityGroups|=sort_by(.GroupId)'  > {{ inv_dir }}/{{ item }}/groups.json"
+    shell: "aws ec2 describe-security-groups --profile {{ aws_profile }} --region {{ item }} | jq '.SecurityGroups|=sort_by(.GroupId)|.SecurityGroups[].IpPermissions|=sort_by(.FromPort)|.SecurityGroups[].IpPermissions[].IpRanges|=sort_by(.CidrIp)|.SecurityGroups[].IpPermissions[].UserIdGroupPairs|=sort_by(.GroupId)' > {{ inv_dir }}/{{ item }}/groups.json"
     with_items: "{{ aws_regions }}"
   - name: describe-volvumes
     shell: "aws ec2 describe-volumes --profile {{ aws_profile }} --region {{ item }} | jq '.Volumes|=sort_by(.CreateTime)' > {{ inv_dir }}/{{ item }}/volumes.json"

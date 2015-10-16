@@ -25,5 +25,5 @@
     shell: "aws ec2 describe-vpcs --profile {{ aws_profile }} --region {{ item }} |  jq '.Vpcs|=sort_by(.VpcId)'  > {{ inv_dir }}/{{ item }}/vpcs.json"
     with_items: "{{ aws_regions }}"
   - name: describe-subnets
-    shell: "aws ec2 describe-subnets --profile {{ aws_profile }} --region {{ item }} |  jq '.Subnets|=sort_by(.SubnetId)' > {{ inv_dir }}/{{ item }}/vpcs.json"
+    shell: "aws ec2 describe-subnets --profile {{ aws_profile }} --region {{ item }} |  jq '.Subnets|=sort_by(.SubnetId)' > {{ inv_dir }}/{{ item }}/subnets.json"
     with_items: "{{ aws_regions }}"

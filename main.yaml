@@ -15,9 +15,15 @@
   - name: describe-groups
     shell: "aws ec2 describe-security-groups --profile {{ aws_profile }} --region {{ item }} | jq '.SecurityGroups|=sort_by(.GroupId)|.SecurityGroups[].IpPermissions|=sort_by(.FromPort)|.SecurityGroups[].IpPermissions[].IpRanges|=sort_by(.CidrIp)|.SecurityGroups[].IpPermissions[].UserIdGroupPairs|=sort_by(.GroupId)' > {{ inv_dir }}/{{ item }}/groups.json"
     with_items: "{{ aws_regions }}"
-  - name: describe-volvumes
+  - name: describe-volumes
     shell: "aws ec2 describe-volumes --profile {{ aws_profile }} --region {{ item }} | jq '.Volumes|=sort_by(.CreateTime)' > {{ inv_dir }}/{{ item }}/volumes.json"
     with_items: "{{ aws_regions }}"
   - name: describe-elb
     shell: "aws elb describe-load-balancers --profile {{ aws_profile }} --region {{ item }} |  jq '.LoadBalancerDescriptions|=sort_by(.CreatedTime)'  > {{ inv_dir }}/{{ item }}/elbs.json"
+    with_items: "{{ aws_regions }}"
+  - name: describe-vpcs
+    shell: "aws ec2 describe-vpcs --profile {{ aws_profile }} --region {{ item }} |  jq '.Vpcs|=sort_by(.VpcId)'  > {{ inv_dir }}/{{ item }}/vpcs.json"
+    with_items: "{{ aws_regions }}"
+  - name: describe-subnets
+    shell: "aws ec2 describe-subnets --profile {{ aws_profile }} --region {{ item }} |  jq '.Subnets|=sort_by(.SubnetId)' > {{ inv_dir }}/{{ item }}/vpcs.json"
     with_items: "{{ aws_regions }}"

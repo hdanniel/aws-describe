@@ -28,8 +28,11 @@
     shell: "aws ec2 describe-subnets --profile {{ aws_profile }} --region {{ item }} |  jq '.Subnets|=sort_by(.SubnetId)' > {{ inv_dir }}/{{ item }}/subnets.json"
     with_items: "{{ aws_regions }}"
   - name: describe-dynamodb
-    shell: "aws dynamodb --profile {{ aws_profile }} list-tables' > {{ inv_dir }}/{{ item }}/dynamodb.json"
+    shell: "aws dynamodb --profile {{ aws_profile }} list-tables > {{ inv_dir }}/{{ item }}/dynamodb.json"
     with_items: "{{ aws_regions }}"
   - name: describe-elasticache
-    shell: "aws elasticache --profile {{ aws_profile }} describe-cache-clusters' | jq '.CacheClusters|=sort_by(.CacheClusterId)' > {{ inv_dir }}/{{ item }}/elasticache.json"
+    shell: "aws elasticache --profile {{ aws_profile }} describe-cache-clusters | jq '.CacheClusters|=sort_by(.CacheClusterId)' > {{ inv_dir }}/{{ item }}/elasticache.json"
+    with_items: "{{ aws_regions }}"
+  - name: describe-rds
+    shell: "aws rds --profile {{ aws_profile }} describe-db-instances | jq '.DBInstances|=sort_by(.DBInstanceIdentifier)' > {{ inv_dir }}/{{ item }}/rds.json"
     with_items: "{{ aws_regions }}"

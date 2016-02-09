@@ -39,3 +39,6 @@
   - name: describe-s3
     shell: "aws s3 ls > {{ inv_dir }}/s3.json"
     with_items: "{{ aws_regions }}"
+  - name: describe-lambda
+    shell: "aws lambda --profile {{ aws_profile }} --region {{ item }} list-functions > {{ inv_dir }}/{{ item }}/lambda.json"
+    with_items: "{{ aws_regions }}"

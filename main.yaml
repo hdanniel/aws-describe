@@ -43,3 +43,7 @@
     shell: "aws lambda --profile {{ aws_profile }} --region {{ item }} list-functions > {{ inv_dir }}/{{ item }}/lambda.json"
     with_items: "{{ aws_regions }}"
     when: item != "us-west-1"
+  - name: describe-autoscaling
+    shell: "aws autoscaling --profile {{ aws_profile }} --region {{ item }} describe-auto-scaling-groups > {{ inv_dir }}/{{ item }}/autoscaling.json"
+    with_items: "{{ aws_regions }}"
+    when: item != "us-west-1"

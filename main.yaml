@@ -42,4 +42,4 @@
   - name: describe-lambda
     shell: "aws lambda --profile {{ aws_profile }} --region {{ item }} list-functions > {{ inv_dir }}/{{ item }}/lambda.json"
     with_items: "{{ aws_regions }}"
-    when: item.region != "us-west-1"
+    when: item != "us-west-1"

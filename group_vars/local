@@ -1,2 +1,3 @@
 ---
-aws_profile: "rpp"
+aws_profile: "cab"
+jq_path: /usr/local/bin/jq

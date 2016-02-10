@@ -1,0 +1,2 @@
+- name: install jq 1.5 (linux 64 bits) 
+  shell: curl https://github.com/stedolan/jq/releases/download/jq-1.5/jq-linux64 -o {{ jq_path }} 
